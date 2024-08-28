@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:json_editor_web/constants/ui_constants.dart';
+import 'package:json_editor_web/utils/extensions.dart';
 
 class CustomDropdown<T> extends StatelessWidget {
   final String label;
-  final T value;
+  final T? value;
   final List<T> items;
   final void Function(T?)? onChanged;
-  final EdgeInsetsGeometry padding; // New parameter
+  final EdgeInsetsGeometry? padding;
 
   const CustomDropdown({
     super.key,
     required this.label,
-    required this.value,
+    this.value,
     required this.items,
     this.onChanged,
-    this.padding =
-        const EdgeInsets.symmetric(vertical: 8.0), // Reduced vertical padding
+    this.padding,
   });
 
   @override
   Widget build(BuildContext context) {
+    var updatedValue = value;
+    if (updatedValue.isNull) {
+      updatedValue = null;
+    }
+
     return Padding(
-      padding: padding,
+      padding: padding ?? UiConst.dropdownPadding,
       child: DropdownButtonFormField<T>(
-        value: value,
+        value: updatedValue,
+        hint: const Text('-'),
         onChanged: onChanged,
         decoration: InputDecoration(
           labelText: label,

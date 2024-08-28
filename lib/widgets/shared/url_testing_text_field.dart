@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:json_editor_web/constants/ui_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UrlTestingTextField extends StatefulWidget {
   final String label;
   final TextEditingController controller;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
+  final void Function(String)? onChanged;
 
   const UrlTestingTextField({
     super.key,
     required this.label,
     required this.controller,
-    this.padding = const EdgeInsets.symmetric(vertical: 8.0),
+    this.padding,
+    this.onChanged,
   });
 
   @override
@@ -29,7 +32,7 @@ class _UrlTestingTextFieldState extends State<UrlTestingTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: widget.padding,
+      padding: widget.padding ?? UiConst.urlTestingTextFieldPadding,
       child: TextField(
         controller: widget.controller,
         decoration: InputDecoration(
@@ -46,6 +49,9 @@ class _UrlTestingTextFieldState extends State<UrlTestingTextField> {
           setState(() {
             _redirectURL = value;
             _isURLValid = _urlRegex.hasMatch(value);
+            if (widget.onChanged != null) {
+              widget.onChanged!(value);
+            }
           });
         },
       ),
@@ -59,7 +65,7 @@ class _UrlTestingTextFieldState extends State<UrlTestingTextField> {
         await launchUrl(url);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not launch the URL')),
+          const SnackBar(content: Text('Could not launch the URL')),
         );
       }
     }
