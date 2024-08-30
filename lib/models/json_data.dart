@@ -31,8 +31,8 @@ class JsonData with _$JsonData {
         titleColor: '',
         buttonColor: '',
         modalBackgroundColor: '',
-        bodyPadding: 0,
-        buttonPadding: 0,
+        bodyPadding: null,
+        buttonPadding: null,
         isError: false,
         redirectURL: '',
       );

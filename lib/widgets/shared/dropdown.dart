@@ -21,7 +21,7 @@ class CustomDropdown<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var updatedValue = value;
-    if (updatedValue.isNull) {
+    if (updatedValue.isNull || updatedValue.isEmpty) {
       updatedValue = null;
     }
 

@@ -52,25 +52,30 @@ class LiveJsonBlock extends HookWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                // Center(
-                //   child: ElevatedButton(
-                //     onPressed: () async {
-                //       await showDialog(
-                //         context: context,
-                //         builder: (context) {
-                //           return JsonImportModal(
-                //             onSubmit: (_) {},
-                //           );
-                //         },
-                //       );
-                //     },
-                //     style: const ButtonStyle(
-                //         elevation: MaterialStatePropertyAll(8),
-                //         fixedSize: MaterialStatePropertyAll(Size(148, 48))),
-                //     child: const Text('Import JSON'),
-                //   ),
-                // ),
-                // const SizedBox(height: 16),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (innerContext) {
+                          return JsonImportModal(
+                            onSubmit: (value) {
+                              context.read<JsonBloc>().add(
+                                    JsonEvent.onImportJson(value: value),
+                                  );
+                            },
+                            onChanged: (_) {},
+                          );
+                        },
+                      );
+                    },
+                    style: const ButtonStyle(
+                        elevation: MaterialStatePropertyAll(8),
+                        fixedSize: MaterialStatePropertyAll(Size(148, 48))),
+                    child: const Text('Import JSON'),
+                  ),
+                ),
+                const SizedBox(height: 16),
               ],
             ),
           ),

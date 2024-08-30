@@ -195,13 +195,6 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
 
           emit(
             state.copyWith(
-              json: JsonData.empty(),
-              representation: JsonData.empty().toJson().toString(),
-            ),
-          );
-
-          emit(
-            state.copyWith(
               json: json,
               representation:
                   const JsonEncoder.withIndent('    ').convert(jsonMap),
