@@ -5,9 +5,9 @@ enum JsonKeys {
   buttonNavigation('buttonNavigation', 'Button Navigation', null),
   closeButtonNavigation(
       'closeButtonNavigation', 'Close Button Navigation', null),
-  titleColor('titleColor', 'Title Color', ''),
-  buttonColor('buttonColor', 'Button Color', ''),
-  modalBackgroundColor('modalBackgroundColor', 'Modal Background Color', ''),
+  titleColor('titleColor', 'Title Color', null),
+  buttonColor('buttonColor', 'Button Color', null),
+  modalBackgroundColor('modalBackgroundColor', 'Modal Background Color', null),
   bodyPadding('bodyPadding', 'Body Padding', null),
   buttonPadding('buttonPadding', 'Button Padding', null),
   isError('isError', 'Is Error', null),

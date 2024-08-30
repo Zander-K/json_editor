@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:json_editor_web/application/json/json_bloc.dart';
-import 'package:json_editor_web/widgets/json_import_modal.dart';
 
 class LiveJsonBlock extends HookWidget {
   const LiveJsonBlock({

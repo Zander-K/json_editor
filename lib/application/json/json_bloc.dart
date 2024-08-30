@@ -49,18 +49,21 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
           );
         },
         onChangedButtonText: (e) {
-          emit(
-            state.copyWith(
-              json: state.json.copyWith(
-                buttonText: e.value,
-              ),
-              representation: updateJsonRepresentation(
-                state.representation,
-                JsonKeys.buttonText.key,
-                e.value,
-              ),
+          // Whatever needs to happen without updating your UI {
+          final updatedState = state.copyWith(
+            json: state.json.copyWith(
+              buttonText: e.value,
+            ),
+            representation: updateJsonRepresentation(
+              state.representation,
+              JsonKeys.buttonText.key,
+              e.value,
             ),
           );
+          // }
+
+          // Only when you want your UI to update, you will EMIT a new state.
+          emit(updatedState);
         },
         onChangedButtonNavigation: (e) {
           emit(
