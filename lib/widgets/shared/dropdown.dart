@@ -28,7 +28,7 @@ class CustomDropdown<T> extends StatelessWidget {
     return Padding(
       padding: padding ?? UiConst.dropdownPadding,
       child: DropdownButtonFormField<T>(
-        value: updatedValue,
+        value: getValidValues,
         hint: const Text('-'),
         onChanged: onChanged,
         decoration: InputDecoration(
@@ -42,5 +42,19 @@ class CustomDropdown<T> extends StatelessWidget {
         }).toList(),
       ),
     );
+  }
+
+  T? get getValidValues {
+    for (var item in items) {
+      if (item.runtimeType == String &&
+          item.toString().toLowerCase() == value.toString().toLowerCase()) {
+        return value;
+      }
+      if (item.runtimeType == int && item == value) {
+        return value;
+      }
+    }
+
+    return null;
   }
 }

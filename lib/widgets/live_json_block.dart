@@ -17,66 +17,68 @@ class LiveJsonBlock extends HookWidget {
       builder: (context, state) {
         return Expanded(
           flex: 1,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 36),
-            child: Column(
-              children: [
-                const Text(
-                  "Live JSON Representation:",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                Card(
-                  elevation: 8,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 36),
+              child: Column(
+                children: [
+                  const Text(
+                    "Live JSON Representation:",
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: SelectableText(
-                      state.representation,
-                      style: const TextStyle(fontFamily: 'monospace'),
+                  const SizedBox(height: 10),
+                  Card(
+                    elevation: 8,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: SelectableText(
+                        state.representation,
+                        style: const TextStyle(fontFamily: 'monospace'),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 32),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _generateJson(context, state);
-                    },
-                    style: const ButtonStyle(
-                        elevation: MaterialStatePropertyAll(8),
-                        fixedSize: MaterialStatePropertyAll(Size(148, 48))),
-                    child: const Text('Generate JSON'),
+                  const SizedBox(height: 32),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _generateJson(context, state);
+                      },
+                      style: const ButtonStyle(
+                          elevation: MaterialStatePropertyAll(8),
+                          fixedSize: MaterialStatePropertyAll(Size(148, 48))),
+                      child: const Text('Generate JSON'),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await showDialog(
-                        context: context,
-                        builder: (innerContext) {
-                          return JsonImportModal(
-                            onSubmit: (value) {
-                              context.read<JsonBloc>().add(
-                                    JsonEvent.onImportJson(value: value),
-                                  );
-                            },
-                            onChanged: (_) {},
-                          );
-                        },
-                      );
-                    },
-                    style: const ButtonStyle(
-                        elevation: MaterialStatePropertyAll(8),
-                        fixedSize: MaterialStatePropertyAll(Size(148, 48))),
-                    child: const Text('Import JSON'),
+                  const SizedBox(height: 16),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (innerContext) {
+                            return JsonImportModal(
+                              onSubmit: (value) {
+                                context.read<JsonBloc>().add(
+                                      JsonEvent.onImportJson(value: value),
+                                    );
+                              },
+                              onChanged: (_) {},
+                            );
+                          },
+                        );
+                      },
+                      style: const ButtonStyle(
+                          elevation: MaterialStatePropertyAll(8),
+                          fixedSize: MaterialStatePropertyAll(Size(148, 48))),
+                      child: const Text('Import JSON'),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 16),
-              ],
+                  const SizedBox(height: 16),
+                ],
+              ),
             ),
           ),
         );
