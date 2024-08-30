@@ -16,7 +16,7 @@ class MainPage extends StatelessWidget {
           title: const Text('Startup Prompt JSON Editor'),
           elevation: 8,
         ),
-        body: Row(
+        body: const Row(
           children: [
             JsonEditorPage(),
             JsonPreviewPage(),
