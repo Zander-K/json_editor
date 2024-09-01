@@ -18,7 +18,7 @@ class JsonData with _$JsonData {
     required String? modalBackgroundColor,
     required int? bodyPadding,
     required int? buttonPadding,
-    required bool isError,
+    required bool? isError,
     required String? redirectURL,
   }) = _JsonData;
 
@@ -33,7 +33,7 @@ class JsonData with _$JsonData {
         modalBackgroundColor: '',
         bodyPadding: null,
         buttonPadding: null,
-        isError: false,
+        isError: null,
         redirectURL: '',
       );
 

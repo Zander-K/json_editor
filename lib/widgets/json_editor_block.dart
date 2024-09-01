@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:json_editor_web/application/json/json_bloc.dart';
+import 'package:json_editor_web/enums/color_options.dart';
 import 'package:json_editor_web/enums/json_keys.dart';
 import 'package:json_editor_web/enums/navigation_options.dart';
 import 'package:json_editor_web/enums/padding_options.dart';
@@ -39,6 +40,11 @@ class JsonEditorBlock extends StatelessWidget {
         text: JsonKeys.redirectURL.defaultValue.toString());
 
     return BlocListener<JsonBloc, JsonState>(
+      listenWhen: (previous, current) {
+        return previous != current &&
+            !current.importedData &&
+            previous.importedData;
+      },
       listener: (context, state) {
         titleController.text = state.json.title ?? '';
         descriptionController.text = state.json.description ?? '';
@@ -54,10 +60,6 @@ class JsonEditorBlock extends StatelessWidget {
         buttonPaddingController.text = state.json.buttonPadding.toString();
         isErrorController.text = state.json.isError.toString();
         redirectURLController.text = state.json.redirectURL ?? '';
-      },
-      listenWhen: (previous, current) {
-        return previous != current &&
-            (!current.importedData || previous.importedData);
       },
       child: BlocBuilder<JsonBloc, JsonState>(
         builder: (context, state) {
@@ -143,34 +145,43 @@ class JsonEditorBlock extends StatelessWidget {
                                     );
                               },
                             ),
-                            CustomTextField(
+                            CustomDropdown<String>(
                               label: capitalize(JsonKeys.titleColor.name),
-                              controller: titleColorController,
+                              value: titleColorController.text,
+                              items: ColorOptions.values
+                                  .map((e) => e.value)
+                                  .toList(),
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
                                       JsonEvent.onChangedTitleColor(
-                                          value: value),
+                                          value: value.toString()),
                                     );
                               },
                             ),
-                            CustomTextField(
+                            CustomDropdown<String>(
                               label: capitalize(JsonKeys.buttonColor.name),
-                              controller: buttonColorController,
+                              value: buttonColorController.text,
+                              items: ColorOptions.values
+                                  .map((e) => e.value)
+                                  .toList(),
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
                                       JsonEvent.onChangedButtonColor(
-                                          value: value),
+                                          value: value ?? ''),
                                     );
                               },
                             ),
-                            CustomTextField(
+                            CustomDropdown<String>(
                               label: capitalize(
                                   JsonKeys.modalBackgroundColor.name),
-                              controller: modalBackgroundColorController,
+                              value: modalBackgroundColorController.text,
+                              items: ColorOptions.values
+                                  .map((e) => e.value)
+                                  .toList(),
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
                                       JsonEvent.onChangedModalBackgroundColor(
-                                          value: value),
+                                          value: value ?? ''),
                                     );
                               },
                             ),

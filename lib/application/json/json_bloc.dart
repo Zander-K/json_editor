@@ -164,12 +164,12 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
           emit(
             state.copyWith(
               json: state.json.copyWith(
-                isError: !state.json.isError,
+                isError: !(state.json.isError ?? true),
               ),
               representation: updateJsonRepresentation(
                 state.representation,
                 JsonKeys.isError.key,
-                !state.json.isError,
+                !(state.json.isError ?? true),
               ),
             ),
           );
@@ -189,19 +189,20 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
           );
         },
         onImportJson: (e) {
+          emit(state.copyWith(importedData: true));
+
           final jsonMap = jsonDecode(e.value ?? '{}');
 
           final json = JsonData.fromJson(jsonMap);
 
           emit(
             state.copyWith(
-              importedData: true,
+              importedData: false,
               json: json,
               representation:
                   const JsonEncoder.withIndent('    ').convert(jsonMap),
             ),
           );
-          emit(state.copyWith(importedData: false));
         },
       );
     });
