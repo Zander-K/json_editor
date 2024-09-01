@@ -189,20 +189,20 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
           );
         },
         onImportJson: (e) {
+          emit(state.copyWith(importedData: true));
+
           final jsonMap = jsonDecode(e.value ?? '{}');
 
           final json = JsonData.fromJson(jsonMap);
 
           emit(
             state.copyWith(
-              importedData: true,
+              importedData: false,
               json: json,
               representation:
                   const JsonEncoder.withIndent('    ').convert(jsonMap),
             ),
           );
-
-          emit(state.copyWith(importedData: false));
         },
       );
     });

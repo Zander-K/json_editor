@@ -40,6 +40,11 @@ class JsonEditorBlock extends StatelessWidget {
         text: JsonKeys.redirectURL.defaultValue.toString());
 
     return BlocListener<JsonBloc, JsonState>(
+      listenWhen: (previous, current) {
+        return previous != current &&
+            !current.importedData &&
+            previous.importedData;
+      },
       listener: (context, state) {
         titleController.text = state.json.title ?? '';
         descriptionController.text = state.json.description ?? '';
@@ -56,10 +61,6 @@ class JsonEditorBlock extends StatelessWidget {
         isErrorController.text = state.json.isError.toString();
         redirectURLController.text = state.json.redirectURL ?? '';
       },
-      // listenWhen: (previous, current) {
-      //   return previous != current &&
-      //       (!current.importedData || previous.importedData);
-      // },
       child: BlocBuilder<JsonBloc, JsonState>(
         builder: (context, state) {
           return Expanded(
@@ -148,7 +149,7 @@ class JsonEditorBlock extends StatelessWidget {
                               label: capitalize(JsonKeys.titleColor.name),
                               value: titleColorController.text,
                               items: ColorOptions.values
-                                  .map((e) => e.name)
+                                  .map((e) => e.value)
                                   .toList(),
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
@@ -161,7 +162,7 @@ class JsonEditorBlock extends StatelessWidget {
                               label: capitalize(JsonKeys.buttonColor.name),
                               value: buttonColorController.text,
                               items: ColorOptions.values
-                                  .map((e) => e.name)
+                                  .map((e) => e.value)
                                   .toList(),
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
@@ -175,7 +176,7 @@ class JsonEditorBlock extends StatelessWidget {
                                   JsonKeys.modalBackgroundColor.name),
                               value: modalBackgroundColorController.text,
                               items: ColorOptions.values
-                                  .map((e) => e.name)
+                                  .map((e) => e.value)
                                   .toList(),
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
