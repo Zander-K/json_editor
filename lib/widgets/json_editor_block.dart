@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:json_editor_web/application/json/json_bloc.dart';
+import 'package:json_editor_web/enums/color_options.dart';
 import 'package:json_editor_web/enums/json_keys.dart';
 import 'package:json_editor_web/enums/navigation_options.dart';
 import 'package:json_editor_web/enums/padding_options.dart';
@@ -143,34 +144,43 @@ class JsonEditorBlock extends StatelessWidget {
                                     );
                               },
                             ),
-                            CustomTextField(
+                            CustomDropdown<String>(
                               label: capitalize(JsonKeys.titleColor.name),
-                              controller: titleColorController,
+                              value: titleColorController.text,
+                              items: ColorOptions.values
+                                  .map((e) => e.name)
+                                  .toList(),
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
                                       JsonEvent.onChangedTitleColor(
-                                          value: value),
+                                          value: value.toString()),
                                     );
                               },
                             ),
-                            CustomTextField(
+                            CustomDropdown<String>(
                               label: capitalize(JsonKeys.buttonColor.name),
-                              controller: buttonColorController,
+                              value: buttonColorController.text,
+                              items: ColorOptions.values
+                                  .map((e) => e.name)
+                                  .toList(),
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
                                       JsonEvent.onChangedButtonColor(
-                                          value: value),
+                                          value: value ?? ''),
                                     );
                               },
                             ),
-                            CustomTextField(
+                            CustomDropdown<String>(
                               label: capitalize(
                                   JsonKeys.modalBackgroundColor.name),
-                              controller: modalBackgroundColorController,
+                              value: modalBackgroundColorController.text,
+                              items: ColorOptions.values
+                                  .map((e) => e.name)
+                                  .toList(),
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
                                       JsonEvent.onChangedModalBackgroundColor(
-                                          value: value),
+                                          value: value ?? ''),
                                     );
                               },
                             ),

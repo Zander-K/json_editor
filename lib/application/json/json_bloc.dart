@@ -164,12 +164,12 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
           emit(
             state.copyWith(
               json: state.json.copyWith(
-                isError: !state.json.isError,
+                isError: !(state.json.isError ?? true),
               ),
               representation: updateJsonRepresentation(
                 state.representation,
                 JsonKeys.isError.key,
-                !state.json.isError,
+                !(state.json.isError ?? true),
               ),
             ),
           );
