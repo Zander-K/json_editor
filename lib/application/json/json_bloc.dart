@@ -201,6 +201,7 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
                   const JsonEncoder.withIndent('    ').convert(jsonMap),
             ),
           );
+
           emit(state.copyWith(importedData: false));
         },
       );

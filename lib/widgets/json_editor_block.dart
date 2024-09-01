@@ -56,10 +56,10 @@ class JsonEditorBlock extends StatelessWidget {
         isErrorController.text = state.json.isError.toString();
         redirectURLController.text = state.json.redirectURL ?? '';
       },
-      listenWhen: (previous, current) {
-        return previous != current &&
-            (!current.importedData || previous.importedData);
-      },
+      // listenWhen: (previous, current) {
+      //   return previous != current &&
+      //       (!current.importedData || previous.importedData);
+      // },
       child: BlocBuilder<JsonBloc, JsonState>(
         builder: (context, state) {
           return Expanded(
