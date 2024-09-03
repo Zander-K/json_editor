@@ -54,6 +54,8 @@ jobs:
           else
             echo "actor_email=noreply@github.com" >> $GITHUB_ENV
           fi
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Set Template File Based on Label
         id: set-template
