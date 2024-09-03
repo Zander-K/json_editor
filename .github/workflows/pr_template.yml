@@ -33,7 +33,7 @@ jobs:
           
           echo "Branch Name: $BRANCH_NAME"
           
-          TICKET_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '[RIGAriga]+[-_][0-9]+')
+          TICKET_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '[RIGAriga]+[-_][0-9]+') >> $GITHUB_ENV
 
           echo "Ticket Number=$TICKET_NUMBER"
           
