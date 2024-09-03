@@ -36,6 +36,9 @@ jobs:
           # Extract the ticket number (e.g., RIGA-123 or RIGA_123)
           TICKET_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '[RIGAriga]+[-_][0-9]+') >> $GITHUB_ENV
           
+          echo $BRANCH_NAME
+          echo $TICKET_NUMBER
+          
           if [ -n "$TICKET_NUMBER" ]; then
             echo "ticket_number=$TICKET_NUMBER" >> $GITHUB_ENV
           else
