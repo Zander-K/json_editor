@@ -13,10 +13,35 @@ permissions:
 
 jobs:
   select-template:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-laRIGA
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
+
+      # - name: Extract Ticket Number from Branch Name
+      #   id: extract-ticket
+      #   run: |
+      #     # Extract the branch name
+      #     BRANCH_NAME=$(echo "${{ github.ref }}" | sed 's|refs/heads/||')
+          
+      #     # Extract the ticket number (e.g., RIGA-123 or RIGA_123)
+      #     if [[ "$BRANCH_NAME" =~ ([A-Z]+[-_][0-9]+) ]]; then
+      #       echo "ticket_number=${BASH_REMATCH[1]}" >> $GITHUB_ENV
+      #     else
+      #       echo "ticket_number=" >> $GITHUB_ENV
+      #     fi
+      - name: Extract Ticket Number from Branch Name
+        id: extract-ticket
+        run: |
+          # Extract the branch name
+          BRANCH_NAME=$(echo "${{ github.ref }}" | sed 's|refs/heads/||')
+          
+          # Extract the ticket number (e.g., RIGA-123 or RIGA_123)
+          if [[ "$BRANCH_NAME" =~ ([A-Z]+[-_][0-9]+) ]]; then
+            echo "ticket_number=${BASH_REMATCH[1]}" >> $GITHUB_ENV
+          else
+            echo "ticket_number=RIGA-000" >> $GITHUB_ENV # Default to RIGA-000 if no match
+          fi
 
       - name: Set Template File Based on Label
         id: set-template
@@ -29,10 +54,37 @@ jobs:
             echo "template_file=.github/PULL_REQUEST_TEMPLATE/bug.md" >> $GITHUB_ENV
           fi
 
+      # - name: Update PR Description
+      #   if: env.template_file != ''
+      #   run: |
+      #     TEMPLATE=$(cat ${{ env.template_file }})
+      #     gh pr edit ${{ github.event.pull_request.number }} --body "$TEMPLATE"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Update PR Description
+      #   if: env.template_file != ''
+      #   run: |
+      #     TEMPLATE=$(cat ${{ env.template_file }})
+          
+      #     # Add the ticket number to the PR description if it exists
+      #     if [ -n "${{ env.ticket_number }}" ]; then
+      #       TEMPLATE="Ticket: ${{ env.ticket_number }}\n\n$TEMPLATE"
+      #     fi
+          
+      #     gh pr edit ${{ github.event.pull_request.number }} --body "$TEMPLATE"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
       - name: Update PR Description
         if: env.template_file != ''
         run: |
           TEMPLATE=$(cat ${{ env.template_file }})
+          
+          # Replace RIGA-000 placeholders with the extracted ticket number
+          TEMPLATE=$(echo "$TEMPLATE" | sed "s/RIGA-000/${{ env.ticket_number }}/g")
+          TEMPLATE=$(echo "$TEMPLATE" | sed "s|https://daubltd.atlassian.net/browse/RIGA-000|https://daubltd.atlassian.net/browse/${{ env.ticket_number }}|g")
+
           gh pr edit ${{ github.event.pull_request.number }} --body "$TEMPLATE"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
