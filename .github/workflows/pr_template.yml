@@ -1,0 +1,33 @@
+name: PR Template Selector
+
+on:
+  pull_request:
+    types:
+      - opened
+      - labeled
+
+jobs:
+  select-template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set Template File Based on Label
+        id: set-template
+        run: |
+          if [[ "${{ github.event.action }}" == "opened" ]]; then
+            echo "template_file=.github/PULL_REQUEST_TEMPLATE.md" >> $GITHUB_ENV
+          elif [[ "${{ github.event.label.name }}" == "feature" ]]; then
+            echo "template_file=.github/PULL_REQUEST_TEMPLATE/feature.md" >> $GITHUB_ENV
+          elif [[ "${{ github.event.label.name }}" == "bug" ]]; then
+            echo "template_file=.github/PULL_REQUEST_TEMPLATE/bug.md" >> $GITHUB_ENV
+          fi
+
+      - name: Update PR Description
+        if: env.template_file != ''
+        run: |
+          TEMPLATE=$(cat ${{ env.template_file }})
+          gh pr edit ${{ github.event.pull_request.number }} --body "$TEMPLATE"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
