@@ -42,6 +42,19 @@ jobs:
             echo "ticket_number=RIGA-000" >> $GITHUB_ENV # Default to RIGA-000 if no match
           fi
 
+      - name: Retrieve GitHub Actor Email
+        id: get-email
+        run: |
+          # Retrieve the email using the gh CLI
+          ACTOR_EMAIL=$(gh api "users/${{ github.actor }}" --jq .email)
+
+          # If the email is not available, fall back to a default
+          if [ -n "$ACTOR_EMAIL" ] && [ "$ACTOR_EMAIL" != "null" ]; then
+            echo "actor_email=$ACTOR_EMAIL" >> $GITHUB_ENV
+          else
+            echo "actor_email=noreply@github.com" >> $GITHUB_ENV
+          fi
+
       - name: Set Template File Based on Label
         id: set-template
         run: |
@@ -68,6 +81,8 @@ jobs:
           # Replace RIGA-000 placeholders with the extracted ticket number
           TEMPLATE=$(echo "$TEMPLATE" | sed "s/RIGA-000/${{ env.ticket_number }}/g")
           TEMPLATE=$(echo "$TEMPLATE" | sed "s|https://daubltd.atlassian.net/browse/RIGA-000|https://daubltd.atlassian.net/browse/${{ env.ticket_number }}|g")
+
+          TEMPLATE=$(echo "$TEMPLATE" | sed "s|<your.name@rank.com>|${{ env.actor_email }}|g")
 
           gh pr edit ${{ github.event.pull_request.number }} --body "$TEMPLATE"
         env:
