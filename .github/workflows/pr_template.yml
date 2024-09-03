@@ -91,7 +91,7 @@ jobs:
           TEMPLATE=$(echo "$TEMPLATE" | sed "s/RIGA-000/${{ env.ticket_number }}/g")
           TEMPLATE=$(echo "$TEMPLATE" | sed "s|https://daubltd.atlassian.net/browse/RIGA-000|https://daubltd.atlassian.net/browse/${{ env.ticket_number }}|g")
 
-          TEMPLATE=$(echo "$TEMPLATE" | sed "s|<your.name@rank.com>|${{ env.actor_email }}|g")
+          # TEMPLATE=$(echo "$TEMPLATE" | sed "s|<your.name@rank.com>|${{ env.actor_email }}|g")
 
           gh pr edit ${{ github.event.pull_request.number }} --body "$TEMPLATE"
         env:
