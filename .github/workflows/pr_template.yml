@@ -46,6 +46,11 @@ jobs:
             echo "template_file=.github/PULL_REQUEST_TEMPLATE/feature.md" >> $GITHUB_ENV
           elif [[ "${{ github.event.label.name }}" == "bug" ]]; then
             echo "template_file=.github/PULL_REQUEST_TEMPLATE/bug.md" >> $GITHUB_ENV
+          else
+            # Use the existing PR body if no labels match
+            CURRENT_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body -q .body)
+            echo "template_file=current_body.md" >> $GITHUB_ENV
+            echo "$CURRENT_BODY" > current_body.md
           fi
 
       # - name: Update PR Description
