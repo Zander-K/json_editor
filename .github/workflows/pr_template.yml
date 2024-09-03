@@ -52,6 +52,8 @@ jobs:
             echo "template_file=current_body.md" >> $GITHUB_ENV
             echo "$CURRENT_BODY" > current_body.md
           fi
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       # - name: Update PR Description
       #   if: env.template_file != ''
