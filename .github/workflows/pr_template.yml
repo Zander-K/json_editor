@@ -25,25 +25,25 @@ jobs:
       - name: Extract Ticket Number from Branch Name
         id: extract-ticket
         run: |
-          # Extract the branch name
-          # BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             BRANCH_NAME="${{ github.head_ref }}"
           else
             BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           fi
           
-          # Extract the ticket number (e.g., RIGA-123 or RIGA_123)
-          TICKET_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '[RIGAriga]+[-_][0-9]+') >> $GITHUB_ENV
+          echo "Branch Name: $BRANCH_NAME"
           
-          echo $BRANCH_NAME
-          echo $TICKET_NUMBER
+          TICKET_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '[RIGAriga]+[-_][0-9]+')
+
+          echo "Ticket Number=$TICKET_NUMBER"
           
           if [ -n "$TICKET_NUMBER" ]; then
             echo "ticket_number=$TICKET_NUMBER" >> $GITHUB_ENV
           else
             echo "ticket_number=RIGA-000" >> $GITHUB_ENV
           fi
+
+          echo "Ticket Number=$ticket_number"
 
       # - name: Retrieve GitHub Actor Email
       #   id: get-email
