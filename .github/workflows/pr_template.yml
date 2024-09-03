@@ -1,0 +1,98 @@
+name: PR Template Selector
+
+permissions:
+  pull-requests: write 
+  contents: read  
+
+on:
+  pull_request:
+    types:
+      - opened
+      - labeled
+      - synchronize
+
+  push:
+    branches:
+      - '**'
+
+jobs:
+  select-template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Extract Ticket Number from Branch Name
+        id: extract-ticket
+        run: |
+          # Extract the branch name
+          # BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BRANCH_NAME="${{ github.head_ref }}"
+          else
+            BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          fi
+          
+          # Extract the ticket number (e.g., RIGA-123 or RIGA_123)
+          TICKET_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '[RIGAriga]+[-_][0-9]+') >> $GITHUB_ENV
+          
+          if [ -n "$TICKET_NUMBER" ]; then
+            echo "ticket_number=$TICKET_NUMBER" >> $GITHUB_ENV
+          else
+            echo "ticket_number=RIGA-000" >> $GITHUB_ENV
+          fi
+
+      # - name: Retrieve GitHub Actor Email
+      #   id: get-email
+      #   run: |
+      #     # Retrieve the email using the gh CLI
+      #     echo ACTOR_EMAIL=$(gh api "users/${{ github.actor }}" --jq .email) >> $GITHUB_ENV
+      #     echo $ACTOR_EMAIL
+
+      #     if [ -z "$ACTOR_EMAIL" ]; then
+      #       ACTOR_EMAIL="noreply@github.com"
+      #     fi
+
+      #     echo "actor_email=$ACTOR_EMAIL" >> $GITHUB_ENV
+
+      #     # If the email is not available, fall back to a default
+      #     # if [ -n "$ACTOR_EMAIL" ] && [ "$ACTOR_EMAIL" != "null" ]; then
+      #     #   echo "actor_email=$ACTOR_EMAIL" >> $GITHUB_ENV
+      #     # else
+      #     #   echo "actor_email=noreply@rank.com" >> $GITHUB_ENV
+      #     # fi
+      #   env:
+      #     GH_TOKEN: ${{ github.token }}
+
+      - name: Set Template File Based on Label
+        id: set-template
+        run: |
+          if [[ "${{ github.event.action }}" == "opened" ]]; then
+            echo "template_file=.github/PULL_REQUEST_TEMPLATE.md" >> $GITHUB_ENV
+          elif [[ "${{ github.event.label.name }}" == "feature" ]]; then
+            echo "template_file=.github/PULL_REQUEST_TEMPLATE/feature.md" >> $GITHUB_ENV
+          elif [[ "${{ github.event.label.name }}" == "bug" ]]; then
+            echo "template_file=.github/PULL_REQUEST_TEMPLATE/bug.md" >> $GITHUB_ENV
+          else
+            # Use the existing PR body if no labels match
+            CURRENT_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body -q .body)
+            echo "template_file=current_body.md" >> $GITHUB_ENV
+            echo "$CURRENT_BODY" > current_body.md
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Update PR Description
+        if: env.template_file != ''
+        run: |
+          TEMPLATE=$(cat ${{ env.template_file }})
+          
+          # Replace RIGA-000 placeholders with the extracted ticket number
+          TEMPLATE=$(echo "$TEMPLATE" | sed "s/RIGA-000/${{ env.ticket_number }}/g")
+          TEMPLATE=$(echo "$TEMPLATE" | sed "s|https://daubltd.atlassian.net/browse/RIGA-000|https://daubltd.atlassian.net/browse/${{ env.ticket_number }}|g")
+
+          # TEMPLATE=$(echo "$TEMPLATE" | sed "s|<your.name@rank.com>|${{ env.actor_email }}|g")
+
+          gh pr edit ${{ github.event.pull_request.number }} --body "$TEMPLATE"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
