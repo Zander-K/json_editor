@@ -46,13 +46,13 @@ jobs:
         id: get-email
         run: |
           # Retrieve the email using the gh CLI
-          ACTOR_EMAIL=$(gh api "users/${{ github.actor }}" --jq .email)
+          ACTOR_EMAIL=$(gh api "users/${{ github.actor }}" --jq .email) >> $GITHUB_ENV
 
           # If the email is not available, fall back to a default
           if [ -n "$ACTOR_EMAIL" ] && [ "$ACTOR_EMAIL" != "null" ]; then
             echo "actor_email=$ACTOR_EMAIL" >> $GITHUB_ENV
           else
-            echo "actor_email=noreply@github.com" >> $GITHUB_ENV
+            echo "actor_email=noreply@rank.com" >> $GITHUB_ENV
           fi
         env:
           GH_TOKEN: ${{ github.token }}
