@@ -6,6 +6,11 @@ on:
       - opened
       - labeled
 
+permissions:
+  pull-requests: write  # Allow writing to pull requests (needed for editing PR descriptions)
+  contents: read        # Allow reading repository contents
+#   issues: read          # Allow reading issues (if you need to process issue labels, etc.)
+
 jobs:
   select-template:
     runs-on: ubuntu-latest
