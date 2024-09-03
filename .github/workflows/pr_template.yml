@@ -26,7 +26,12 @@ jobs:
         id: extract-ticket
         run: |
           # Extract the branch name
-          BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          # BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BRANCH_NAME="${{ github.head_ref }}"
+          else
+            BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          fi
           
           # Extract the ticket number (e.g., RIGA-123 or RIGA_123)
           TICKET_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '[RIGAriga]+[-_][0-9]+') >> $GITHUB_ENV
@@ -54,28 +59,6 @@ jobs:
           fi
         env:
           GH_TOKEN: ${{ github.token }}
-
-      # - name: Update PR Description
-      #   if: env.template_file != ''
-      #   run: |
-      #     TEMPLATE=$(cat ${{ env.template_file }})
-      #     gh pr edit ${{ github.event.pull_request.number }} --body "$TEMPLATE"
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Update PR Description
-      #   if: env.template_file != ''
-      #   run: |
-      #     TEMPLATE=$(cat ${{ env.template_file }})
-          
-      #     # Add the ticket number to the PR description if it exists
-      #     if [ -n "${{ env.ticket_number }}" ]; then
-      #       TEMPLATE="Ticket: ${{ env.ticket_number }}\n\n$TEMPLATE"
-      #     fi
-          
-      #     gh pr edit ${{ github.event.pull_request.number }} --body "$TEMPLATE"
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
       - name: Update PR Description
         if: env.template_file != ''
