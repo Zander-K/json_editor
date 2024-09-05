@@ -63,7 +63,6 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }} 
       run: |
-        # please fill in the details like the path. 
         gh release create v1.0.0 ./build/web \
           --repo Zander-K/pipelines \
           --title "My App Release" \
