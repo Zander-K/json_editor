@@ -59,6 +59,8 @@ jobs:
       run: sudo apt-get install gh
 
     - name: List
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # GitHub CLI api
         # https://cli.github.com/manual/gh_api
