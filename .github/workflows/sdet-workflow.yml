@@ -58,6 +58,7 @@ jobs:
 
     - name: Create Release in Another Repo
       env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }} 
       run: |
         # please fill in the details like the path. 
