@@ -59,6 +59,8 @@ jobs:
       run: sudo apt-get install gh
 
     - name: Manual
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         gh api \
         --method POST \
