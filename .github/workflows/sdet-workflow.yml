@@ -60,8 +60,10 @@ jobs:
 
     - name: Create Release in Another Repo
       env:
-        # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_TOKEN: ${{ secrets.PAT_TOKEN }} 
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        OWNER: Zander-K
+        REPO: pipelines
+        PAT_TOKEN: ${{ secrets.PAT_TOKEN }} 
       run: |
         gh release create v1.0.1 ./build/web \
           --repo Zander-K/pipelines \
