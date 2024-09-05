@@ -63,7 +63,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         OWNER: Zander-K
         REPO: pipelines
-        PAT_TOKEN: ${{ secrets.PAT_TOKEN }} 
+        GITHUB_TOKEN: ${{ secrets.SDET }} 
       run: |
         gh release create v1.0.1 ./build/web \
           --repo Zander-K/pipelines \
