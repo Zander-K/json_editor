@@ -2,9 +2,9 @@ name: Download Artifact from Previous Workflow
 
 on:
   workflow_run:
-    workflows: ["Build Web"]  # Workflow name of the first workflow
+    workflows: ["Build Web"]
     types:
-      - completed  # Trigger on successful completion
+      - completed  
 
 jobs:
   download:
@@ -14,4 +14,4 @@ jobs:
     - name: Download Artifact
       uses: actions/download-artifact@v4
       with:
-        name: WEB_BUILD  # Name of the artifact you uploaded in the first workflow
+        name: WEB_BUILD 
