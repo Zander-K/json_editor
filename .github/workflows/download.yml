@@ -4,7 +4,8 @@ on:
   workflow_run:
     workflows: ["Build Web"]
     types:
-      - completed  
+      - completed
+  workflow_dispatch: 
 
 jobs:
   download:
@@ -13,7 +14,7 @@ jobs:
     steps:
       - name: Download artifact
         id: download-artifact
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@v4
         with:
             workflow: build.yml
             workflow_conclusion: success
