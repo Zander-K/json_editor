@@ -1,0 +1,17 @@
+name: Download Artifact from Previous Workflow
+
+on:
+  workflow_run:
+    workflows: ["Build Web"]  # Workflow name of the first workflow
+    types:
+      - completed  # Trigger on successful completion
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: WEB_BUILD  # Name of the artifact you uploaded in the first workflow
