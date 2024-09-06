@@ -37,5 +37,5 @@ jobs:
       - name: Upload Web Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WEB_BUILD
+          name: web-build
           path: build/web

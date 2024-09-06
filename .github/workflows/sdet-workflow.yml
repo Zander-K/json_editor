@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - main
 
 jobs:
   build-and-deploy:
@@ -37,7 +37,7 @@ jobs:
       - name: Upload Web Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WEB_BUILD
+          name: web-build-sdet
           path: build/web
 
   build-and-release:
@@ -53,7 +53,7 @@ jobs:
     - name: Download Web Build Artifact
       uses: actions/download-artifact@v4
       with:
-        name: WEB_BUILD
+        name: web-build-sdet
 
     - name: Install GitHub CLI
       run: sudo apt-get install gh
