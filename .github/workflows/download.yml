@@ -11,10 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # - name: Download Artifact
-    #   uses: actions/download-artifact@v4
-    #   with:
-    #     name: WEB_BUILD 
       - name: Download artifact
         id: download-artifact
         uses: dawidd6/action-download-artifact@v6
@@ -83,3 +79,8 @@ jobs:
             #  "fail", "warn", "ignore"
             # default fail
             if_no_artifact_found: fail
+
+      # - name: Download Artifact
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: WEB_BUILD 
