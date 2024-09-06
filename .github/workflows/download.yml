@@ -19,23 +19,27 @@ jobs:
         id: download-artifact
         uses: dawidd6/action-download-artifact@v6
         with:
+            workflow: build.yml
+            workflow_conclusion: success
+            search_artifacts: true
+            name: WEB_BUILD
             # Optional, GitHub token, a Personal Access Token with `public_repo` scope if needed
             # Required, if the artifact is from a different repo
             # Required, if the repo is private a Personal Access Token with `repo` scope is needed or GitHub token in a job where the permissions `action` scope set to `read`
-            github_token: ${{secrets.GITHUB_TOKEN}}
+            # github_token: ${{secrets.GITHUB_TOKEN}}
             # Optional, workflow file name or ID
             # If not specified, will be inferred from run_id (if run_id is specified), or will be the current workflow
-            workflow: build.yml
+            # workflow: build.yml
             # If no workflow is set and workflow_search set to true, then the most recent workflow matching
             # all other criteria will be looked up instead of using the current workflow
-            workflow_search: false
+            # workflow_search: false
             # Optional, the status or conclusion of a completed workflow to search for
             # Can be one of a workflow conclusion:
             #   "failure", "success", "neutral", "cancelled", "skipped", "timed_out", "action_required"
             # Or a workflow status:
             #   "completed", "in_progress", "queued"
             # Use the empty string ("") to ignore status or conclusion in the search
-            workflow_conclusion: success
+            # workflow_conclusion: success
             # Optional, will get head commit SHA
             # pr: ${{github.event.pull_request.number}}
             # Optional, no need to specify if PR is
@@ -58,22 +62,22 @@ jobs:
             # is treated as a regular expression if input name_is_regexp is true
             # will download only those artifacts with a name that matches this regular expression
             # https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions
-            name: WEB_BUILD
+            # name: WEB_BUILD
 
             # Optional, name is treated as a regular expression if set true
-            name_is_regexp: true
+            # name_is_regexp: true
             # Optional, defaults to current repo
-            repo: ${{ github.repository }}
+            # repo: ${{ github.repository }}
             # Optional, check the workflow run to whether it has an artifact
             # then will get the last available artifact from the previous workflow
             # default false, just try to download from the last one
-            check_artifacts: false
+            # check_artifacts: false
             # Optional, search for the last workflow run whose stored an artifact named as in `name` input
             # default false
-            search_artifacts: false
+            # search_artifacts: false
             # Optional, choose to skip unpacking the downloaded artifact(s)
             # default false
-            skip_unpack: false
+            # skip_unpack: false
             # Optional, choose how to exit the action if no artifact is found
             # can be one of:
             #  "fail", "warn", "ignore"
