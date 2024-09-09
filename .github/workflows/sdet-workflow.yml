@@ -50,13 +50,20 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
+    - name: List files in current directory
+      run: |
+        ls -al
+
     - name: Download Web Build Artifact
       uses: actions/download-artifact@v4
       with:
         name: web-build-sdet
 
     - name: List files in current directory
-      run: ls -al
+      run: |
+        ls -al
+        cd web
+        ls -al
 
     - name: Install GitHub CLI
       run: sudo apt-get install gh
@@ -80,7 +87,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.RELEASE_REPO_SECRET }} 
       run: |
-        gh release create v1.0.5 ./web-build-sdet \
+        gh release create v1.0.5 ./web/web-build-sdet \
           --repo Zander-K/pipelines \
           --title "Release 1.0.5" \
           --notes "This is a release of the app build."
