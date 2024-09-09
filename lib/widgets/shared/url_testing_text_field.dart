@@ -3,18 +3,20 @@ import 'package:json_editor_web/constants/ui_constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UrlTestingTextField extends StatefulWidget {
-  final String label;
-  final TextEditingController controller;
-  final EdgeInsetsGeometry? padding;
-  final void Function(String)? onChanged;
-
   const UrlTestingTextField({
     super.key,
     required this.label,
     required this.controller,
     this.padding,
     this.onChanged,
+    this.hintText,
   });
+
+  final String label;
+  final TextEditingController controller;
+  final EdgeInsetsGeometry? padding;
+  final void Function(String)? onChanged;
+  final String? hintText;
 
   @override
   _UrlTestingTextFieldState createState() => _UrlTestingTextFieldState();
@@ -37,6 +39,7 @@ class _UrlTestingTextFieldState extends State<UrlTestingTextField> {
         controller: widget.controller,
         decoration: InputDecoration(
           labelText: widget.label,
+          hintText: widget.hintText,
           suffixIcon: IconButton(
             icon: Icon(
               Icons.link,
