@@ -1,12 +1,12 @@
 name: Build and Release
 
 on:
-  push:
-    branches:
-      - main
-  # pull_request:
+  # push:
   #   branches:
   #     - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
@@ -73,28 +73,12 @@ jobs:
     - name: Zip Web Build
       run: zip -r web-build.zip ./build/web
 
-    # - name: Manual
-    #   env:
-    #     GH_TOKEN: ${{ secrets.RELEASE_REPO_SECRET }} 
-    #     # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     # GITHUB_TOKEN: ${{ secrets.SDET_TOKEN }}
-    #   run: |
-    #     gh api \
-    #     --method POST \
-    #     -H "Accept: application/vnd.github+json" \
-    #     -H "X-GitHub-Api-Version: 2022-11-28" \
-    #     /repos/Zander-K/pipelines/releases \
-    #     -f "tag_name=v1.0.1" -f "target_commitish=main" -f "name=v1.0.1" -f "body=Description of the release" -F "draft=false" -F "prerelease=false" -F "generate_release_notes=false"
-
     - name: Create Release in Another Repo
       env:
         GH_TOKEN: ${{ secrets.RELEASE_REPO_SECRET }} 
-        # OWNER: Zander-K
-        # REPO: pipelines
-        # GITHUB_TOKEN: ${{ secrets.SDET }} 
       run: |
-        gh release create v1.0.2 ./web-build.zip \
+        gh release create v1.0.5 ./web-build.zip \
           --repo Zander-K/pipelines \
-          --title "My App Release" \
+          --title "Release 1.0.5" \
           --notes "This is a release of the app build."
 
