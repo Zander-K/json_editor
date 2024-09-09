@@ -70,8 +70,8 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/Zander-K/pipelines/releases
 
-    - name: Zip Web Build
-      run: zip -r web-build.zip ./build/web
+    # - name: Zip Web Build
+    #   run: zip -r web-build.zip ./build/web
 
     - name: Create Release in Another Repo
       env:
