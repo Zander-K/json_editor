@@ -28,7 +28,8 @@ class JsonEvent with _$JsonEvent {
   const factory JsonEvent.onChangedButtonPadding({required int? value}) =
       OnChangedButtonPadding;
 
-  const factory JsonEvent.onChangedIsError() = OnChangedIsError;
+  const factory JsonEvent.onChangedIsError({required bool? value}) =
+      OnChangedIsError;
   const factory JsonEvent.onChangedRedirectURL({required String value}) =
       OnChangedRedirectURL;
 }

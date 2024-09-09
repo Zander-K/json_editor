@@ -3,12 +3,6 @@ import 'package:json_editor_web/constants/ui_constants.dart';
 import 'package:json_editor_web/utils/extensions.dart';
 
 class CustomDropdown<T> extends StatelessWidget {
-  final String label;
-  final T? value;
-  final List<T> items;
-  final void Function(T?)? onChanged;
-  final EdgeInsetsGeometry? padding;
-
   const CustomDropdown({
     super.key,
     required this.label,
@@ -16,7 +10,15 @@ class CustomDropdown<T> extends StatelessWidget {
     required this.items,
     this.onChanged,
     this.padding,
+    this.hintText,
   });
+
+  final String label;
+  final T? value;
+  final List<T> items;
+  final void Function(T?)? onChanged;
+  final EdgeInsetsGeometry? padding;
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class CustomDropdown<T> extends StatelessWidget {
       padding: padding ?? UiConst.dropdownPadding,
       child: DropdownButtonFormField<T>(
         value: getValidValues,
-        hint: const Text('-'),
+        hint: Text(hintText ?? '-'),
         onChanged: onChanged,
         decoration: InputDecoration(
           labelText: label,

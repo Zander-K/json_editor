@@ -100,6 +100,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomTextField(
                               label: capitalize(JsonKeys.description.name),
+                              hintText: 'Enter a modal description',
                               controller: descriptionController,
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
@@ -110,6 +111,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomTextField(
                               label: capitalize(JsonKeys.buttonText.name),
+                              hintText: 'Enter a button text',
                               controller: buttonTextController,
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
@@ -120,6 +122,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomDropdown<String>(
                               label: capitalize(JsonKeys.buttonNavigation.name),
+                              hintText: 'Select navigation for button',
                               value: buttonNavigationController.text,
                               items: NavigationOptions.values
                                   .map((e) => e.name)
@@ -134,6 +137,7 @@ class JsonEditorBlock extends StatelessWidget {
                             CustomDropdown<String>(
                               label: capitalize(
                                   JsonKeys.closeButtonNavigation.name),
+                              hintText: 'Select navigation for close button',
                               value: closeButtonNavigationController.text,
                               items: NavigationOptions.values
                                   .map((e) => e.name)
@@ -147,6 +151,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomDropdown<String>(
                               label: capitalize(JsonKeys.titleColor.name),
+                              hintText: 'Select a color for the title',
                               value: titleColorController.text,
                               items: ColorOptions.values
                                   .map((e) => e.value)
@@ -160,6 +165,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomDropdown<String>(
                               label: capitalize(JsonKeys.buttonColor.name),
+                              hintText: 'Select a color for the button',
                               value: buttonColorController.text,
                               items: ColorOptions.values
                                   .map((e) => e.value)
@@ -174,6 +180,8 @@ class JsonEditorBlock extends StatelessWidget {
                             CustomDropdown<String>(
                               label: capitalize(
                                   JsonKeys.modalBackgroundColor.name),
+                              hintText:
+                                  'Select a color for the modal background',
                               value: modalBackgroundColorController.text,
                               items: ColorOptions.values
                                   .map((e) => e.value)
@@ -187,6 +195,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomDropdown<int>(
                               label: capitalize(JsonKeys.bodyPadding.name),
+                              hintText: 'Select a size for the body padding',
                               value: bodyPaddingController.text.asInt,
                               items: PaddingOptions.values
                                   .map((e) => e.value)
@@ -200,6 +209,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomDropdown<int>(
                               label: capitalize(JsonKeys.buttonPadding.name),
+                              hintText: 'Select a size for the button padding',
                               value: buttonPaddingController.text.asInt,
                               items: PaddingOptions.values
                                   .map((e) => e.value)
@@ -213,16 +223,19 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomDropdown<bool>(
                               label: capitalize(JsonKeys.isError.name),
+                              hintText:
+                                  'Select an option based on if the modal indicates an error/problem',
                               value: isErrorController.text.asBool,
                               items: const [true, false],
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
-                                      const JsonEvent.onChangedIsError(),
+                                      JsonEvent.onChangedIsError(value: value),
                                     );
                               },
                             ),
                             UrlTestingTextField(
                               label: capitalize(JsonKeys.redirectURL.name),
+                              hintText: 'Enter a URL starting with https://',
                               controller: redirectURLController,
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
