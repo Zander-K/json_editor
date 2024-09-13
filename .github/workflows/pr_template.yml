@@ -5,15 +5,16 @@ permissions:
   contents: read  
 
 on:
-  pull_request:
-    types:
-      - opened
-      - labeled
-      - synchronize
+  # pull_request:
+  #   types:
+  #     - opened
+  #     - labeled
+  #     - synchronize
 
   push:
     branches:
-      - '**'
+      # - '**'
+      - main
 
 jobs:
   select-template:
