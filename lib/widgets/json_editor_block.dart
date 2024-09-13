@@ -26,16 +26,16 @@ class JsonEditorBlock extends StatelessWidget {
         text: JsonKeys.closeButtonNavigation.defaultValue.toString());
     final titleColorController = TextEditingController(
         text: JsonKeys.titleColor.defaultValue.toString());
-    final buttonColorController = TextEditingController(
-        text: JsonKeys.buttonColor.defaultValue.toString());
-    final modalBackgroundColorController = TextEditingController(
-        text: JsonKeys.modalBackgroundColor.defaultValue.toString());
+    // final buttonColorController = TextEditingController(
+    //     text: JsonKeys.buttonColor.defaultValue.toString());
+    // final modalBackgroundColorController = TextEditingController(
+    //     text: JsonKeys.modalBackgroundColor.defaultValue.toString());
     final bodyPaddingController = TextEditingController(
         text: JsonKeys.bodyPadding.defaultValue.toString());
     final buttonPaddingController = TextEditingController(
         text: JsonKeys.buttonPadding.defaultValue.toString());
-    final isErrorController =
-        TextEditingController(text: JsonKeys.isError.defaultValue.toString());
+    final hasErrorController =
+        TextEditingController(text: JsonKeys.hasError.defaultValue.toString());
     final redirectURLController = TextEditingController(
         text: JsonKeys.redirectURL.defaultValue.toString());
 
@@ -53,12 +53,12 @@ class JsonEditorBlock extends StatelessWidget {
         closeButtonNavigationController.text =
             state.json.closeButtonNavigation ?? '';
         titleColorController.text = state.json.titleColor ?? '';
-        buttonColorController.text = state.json.buttonColor ?? '';
-        modalBackgroundColorController.text =
-            state.json.modalBackgroundColor ?? '';
+        // buttonColorController.text = state.json.buttonColor ?? '';
+        // modalBackgroundColorController.text =
+        //     state.json.modalBackgroundColor ?? '';
         bodyPaddingController.text = state.json.bodyPadding.toString();
         buttonPaddingController.text = state.json.buttonPadding.toString();
-        isErrorController.text = state.json.isError.toString();
+        hasErrorController.text = state.json.hasError.toString();
         redirectURLController.text = state.json.redirectURL ?? '';
       },
       child: BlocBuilder<JsonBloc, JsonState>(
@@ -90,7 +90,7 @@ class JsonEditorBlock extends StatelessWidget {
                           children: [
                             CustomTextField(
                               label: capitalize(JsonKeys.title.name),
-                              hintText: 'Enter a modal title',
+                              hintText: JsonKeys.title.hintText,
                               controller: titleController,
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
@@ -100,7 +100,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomTextField(
                               label: capitalize(JsonKeys.description.name),
-                              hintText: 'Enter a modal description',
+                              hintText: JsonKeys.description.hintText,
                               controller: descriptionController,
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
@@ -111,7 +111,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomTextField(
                               label: capitalize(JsonKeys.buttonText.name),
-                              hintText: 'Enter a button text',
+                              hintText: JsonKeys.buttonText.hintText,
                               controller: buttonTextController,
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
@@ -122,7 +122,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomDropdown<String>(
                               label: capitalize(JsonKeys.buttonNavigation.name),
-                              hintText: 'Select navigation for button',
+                              hintText: JsonKeys.buttonNavigation.hintText,
                               value: buttonNavigationController.text,
                               items: NavigationOptions.values
                                   .map((e) => e.name)
@@ -137,7 +137,7 @@ class JsonEditorBlock extends StatelessWidget {
                             CustomDropdown<String>(
                               label: capitalize(
                                   JsonKeys.closeButtonNavigation.name),
-                              hintText: 'Select navigation for close button',
+                              hintText: JsonKeys.closeButtonNavigation.hintText,
                               value: closeButtonNavigationController.text,
                               items: NavigationOptions.values
                                   .map((e) => e.name)
@@ -151,7 +151,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomDropdown<String>(
                               label: capitalize(JsonKeys.titleColor.name),
-                              hintText: 'Select a color for the title',
+                              hintText: JsonKeys.titleColor.hintText,
                               value: titleColorController.text,
                               items: ColorOptions.values
                                   .map((e) => e.value)
@@ -163,39 +163,38 @@ class JsonEditorBlock extends StatelessWidget {
                                     );
                               },
                             ),
-                            CustomDropdown<String>(
-                              label: capitalize(JsonKeys.buttonColor.name),
-                              hintText: 'Select a color for the button',
-                              value: buttonColorController.text,
-                              items: ColorOptions.values
-                                  .map((e) => e.value)
-                                  .toList(),
-                              onChanged: (value) {
-                                context.read<JsonBloc>().add(
-                                      JsonEvent.onChangedButtonColor(
-                                          value: value ?? ''),
-                                    );
-                              },
-                            ),
-                            CustomDropdown<String>(
-                              label: capitalize(
-                                  JsonKeys.modalBackgroundColor.name),
-                              hintText:
-                                  'Select a color for the modal background',
-                              value: modalBackgroundColorController.text,
-                              items: ColorOptions.values
-                                  .map((e) => e.value)
-                                  .toList(),
-                              onChanged: (value) {
-                                context.read<JsonBloc>().add(
-                                      JsonEvent.onChangedModalBackgroundColor(
-                                          value: value ?? ''),
-                                    );
-                              },
-                            ),
+                            // CustomDropdown<String>(
+                            //   label: capitalize(JsonKeys.buttonColor.name),
+                            //   hintText: JsonKeys.buttonColor.hintText,
+                            //   value: buttonColorController.text,
+                            //   items: ColorOptions.values
+                            //       .map((e) => e.value)
+                            //       .toList(),
+                            //   onChanged: (value) {
+                            //     context.read<JsonBloc>().add(
+                            //           JsonEvent.onChangedButtonColor(
+                            //               value: value ?? ''),
+                            //         );
+                            //   },
+                            // ),
+                            // CustomDropdown<String>(
+                            //   label: capitalize(
+                            //       JsonKeys.modalBackgroundColor.name),
+                            //   hintText: JsonKeys.modalBackgroundColor.hintText,
+                            //   value: modalBackgroundColorController.text,
+                            //   items: ColorOptions.values
+                            //       .map((e) => e.value)
+                            //       .toList(),
+                            //   onChanged: (value) {
+                            //     context.read<JsonBloc>().add(
+                            //           JsonEvent.onChangedModalBackgroundColor(
+                            //               value: value ?? ''),
+                            //         );
+                            //   },
+                            // ),
                             CustomDropdown<int>(
                               label: capitalize(JsonKeys.bodyPadding.name),
-                              hintText: 'Select a size for the body padding',
+                              hintText: JsonKeys.bodyPadding.hintText,
                               value: bodyPaddingController.text.asInt,
                               items: PaddingOptions.values
                                   .map((e) => e.value)
@@ -209,7 +208,7 @@ class JsonEditorBlock extends StatelessWidget {
                             ),
                             CustomDropdown<int>(
                               label: capitalize(JsonKeys.buttonPadding.name),
-                              hintText: 'Select a size for the button padding',
+                              hintText: JsonKeys.buttonPadding.hintText,
                               value: buttonPaddingController.text.asInt,
                               items: PaddingOptions.values
                                   .map((e) => e.value)
@@ -222,20 +221,19 @@ class JsonEditorBlock extends StatelessWidget {
                               },
                             ),
                             CustomDropdown<bool>(
-                              label: capitalize(JsonKeys.isError.name),
-                              hintText:
-                                  'Select an option based on if the modal indicates an error/problem',
-                              value: isErrorController.text.asBool,
+                              label: capitalize(JsonKeys.hasError.name),
+                              hintText: JsonKeys.hasError.hintText,
+                              value: hasErrorController.text.asBool,
                               items: const [true, false],
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
-                                      JsonEvent.onChangedIsError(value: value),
+                                      JsonEvent.onChangedHasError(value: value),
                                     );
                               },
                             ),
                             UrlTestingTextField(
                               label: capitalize(JsonKeys.redirectURL.name),
-                              hintText: 'Enter a URL starting with https://',
+                              hintText: JsonKeys.redirectURL.hintText,
                               controller: redirectURLController,
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(

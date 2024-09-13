@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:json_editor_web/application/json/json_bloc.dart';
-import 'package:json_editor_web/presentation/json_builder/json_editor_page.dart';
-import 'package:json_editor_web/presentation/json_preview/json_preview_page.dart';
+import 'package:json_editor_web/constants/spacing_constants.dart';
+import 'package:json_editor_web/widgets/json_editor_block.dart';
+import 'package:json_editor_web/widgets/live_json_block.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -18,8 +19,9 @@ class MainPage extends StatelessWidget {
         ),
         body: const Row(
           children: [
-            JsonEditorPage(),
-            JsonPreviewPage(),
+            JsonEditorBlock(),
+            gap16,
+            LiveJsonBlock(),
           ],
         ),
       ),
