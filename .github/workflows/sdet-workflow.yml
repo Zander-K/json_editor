@@ -1,12 +1,12 @@
 name: Build and Release
 
 on:
-  push:
-    branches:
-      - main
-  # pull_request:
+  # push:
   #   branches:
   #     - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
@@ -40,6 +40,15 @@ jobs:
           name: web-build-sdet
           path: build/web
 
+      - name: Create a simple file
+        run: echo "This is a simple file created by GitHub Actions." > simple-file.txt
+
+      - name: Upload the file as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: simple-file
+          path: simple-file.txt
+
   build-and-release:
     runs-on: ubuntu-latest
     needs: build-and-deploy
@@ -50,10 +59,26 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
+    - name: List files in current directory
+      run: |
+        ls -al
+
     - name: Download Web Build Artifact
       uses: actions/download-artifact@v4
       with:
         name: web-build-sdet
+        path: ./build/web
+
+    - name: Download Simple File Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: simple-file
+
+    - name: List files in current directory
+      run: |
+        ls -al
+        cd build/web
+        ls -al
 
     - name: Install GitHub CLI
       run: sudo apt-get install gh
@@ -73,28 +98,15 @@ jobs:
     - name: Zip Web Build
       run: zip -r web-build.zip ./build/web
 
-    # - name: Manual
-    #   env:
-    #     GH_TOKEN: ${{ secrets.RELEASE_REPO_SECRET }} 
-    #     # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     # GITHUB_TOKEN: ${{ secrets.SDET_TOKEN }}
-    #   run: |
-    #     gh api \
-    #     --method POST \
-    #     -H "Accept: application/vnd.github+json" \
-    #     -H "X-GitHub-Api-Version: 2022-11-28" \
-    #     /repos/Zander-K/pipelines/releases \
-    #     -f "tag_name=v1.0.1" -f "target_commitish=main" -f "name=v1.0.1" -f "body=Description of the release" -F "draft=false" -F "prerelease=false" -F "generate_release_notes=false"
+    - name: Zip Web Build 2
+      run: zip -r web-build-copy.zip ./build/web
 
     - name: Create Release in Another Repo
       env:
         GH_TOKEN: ${{ secrets.RELEASE_REPO_SECRET }} 
-        # OWNER: Zander-K
-        # REPO: pipelines
-        # GITHUB_TOKEN: ${{ secrets.SDET }} 
       run: |
-        gh release create v1.0.2 ./web-build.zip \
+        gh release create v1.0.5 ./simple-file.txt ./web-build.zip web-build-copy.zip \
           --repo Zander-K/pipelines \
-          --title "My App Release" \
+          --title "Release 1.0.5" \
           --notes "This is a release of the app build."
 
