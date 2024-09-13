@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_editor_web/enums/json_keys.dart';
 import 'package:json_editor_web/models/json_data.dart';
+import 'package:json_editor_web/utils/extensions.dart';
 
 part 'json_state.dart';
 part 'json_event.dart';
@@ -163,16 +164,16 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
             ),
           );
         },
-        onChangedIsError: (_) {
+        onChangedIsError: (e) {
           emit(
             state.copyWith(
               json: state.json.copyWith(
-                isError: !state.json.isError,
+                isError: e.value,
               ),
               representation: updateJsonRepresentation(
                 state.representation,
                 JsonKeys.isError.key,
-                !state.json.isError,
+                e.value,
               ),
             ),
           );
@@ -192,19 +193,15 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
           );
         },
         onImportJson: (e) {
+          emit(state.copyWith(importedData: true));
+
           final jsonMap = jsonDecode(e.value ?? '{}');
 
           final json = JsonData.fromJson(jsonMap);
 
           emit(
             state.copyWith(
-              json: JsonData.empty(),
-              representation: JsonData.empty().toJson().toString(),
-            ),
-          );
-
-          emit(
-            state.copyWith(
+              importedData: false,
               json: json,
               representation:
                   const JsonEncoder.withIndent('    ').convert(jsonMap),

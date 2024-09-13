@@ -38,4 +38,10 @@ extension NullAndEmptyExtension<T> on T {
 
     return value.toString() == 'null';
   }
+
+  bool get isEmpty {
+    final value = this;
+
+    return value.toString() == '';
+  }
 }

@@ -5,6 +5,7 @@ class JsonState with _$JsonState {
   factory JsonState({
     required JsonData json,
     required String representation,
+    required bool importedData,
   }) = _JsonState;
 
   factory JsonState.initial() => JsonState(
@@ -24,5 +25,6 @@ class JsonState with _$JsonState {
         ),
         representation: const JsonEncoder.withIndent('    ')
             .convert(JsonData.empty().toJson()),
+        importedData: false,
       );
 }

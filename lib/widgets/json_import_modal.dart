@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class JsonImportModal extends StatelessWidget {
   final void Function(String) onSubmit;
+  final void Function(String)? onChanged;
 
   const JsonImportModal({
     super.key,
     required this.onSubmit,
+    required this.onChanged,
   });
 
   @override
@@ -22,6 +24,7 @@ class JsonImportModal extends StatelessWidget {
           const SizedBox(height: 10),
           TextField(
             controller: jsonController,
+            onChanged: onChanged,
             maxLines: 10,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
