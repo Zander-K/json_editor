@@ -18,18 +18,18 @@ class JsonEvent with _$JsonEvent {
 
   const factory JsonEvent.onChangedTitleColor({required String value}) =
       OnChangedTitleColor;
-  const factory JsonEvent.onChangedButtonColor({required String value}) =
-      OnChangedButtonColor;
-  const factory JsonEvent.onChangedModalBackgroundColor(
-      {required String value}) = OnChangedModalBackgroundColor;
+  // const factory JsonEvent.onChangedButtonColor({required String value}) =
+  //     OnChangedButtonColor;
+  // const factory JsonEvent.onChangedModalBackgroundColor(
+  //     {required String value}) = OnChangedModalBackgroundColor;
 
   const factory JsonEvent.onChangedBodyPadding({required int? value}) =
       OnChangedBodyPadding;
   const factory JsonEvent.onChangedButtonPadding({required int? value}) =
       OnChangedButtonPadding;
 
-  const factory JsonEvent.onChangedIsError({required bool? value}) =
-      OnChangedIsError;
+  const factory JsonEvent.onChangedHasError({required bool? value}) =
+      OnChangedHasError;
   const factory JsonEvent.onChangedRedirectURL({required String value}) =
       OnChangedRedirectURL;
 }

@@ -16,7 +16,7 @@ extension BoolFromString on String {
       return null;
     }
 
-    final boolValue = bool.tryParse(value) ?? false;
+    final boolValue = bool.tryParse(value);
 
     return boolValue;
   }

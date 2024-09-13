@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
-class SpacingConstants {
-  static const zero = EdgeInsets.zero;
-  static const vertical2 = EdgeInsets.symmetric(vertical: 2);
-  static const vertical4 = EdgeInsets.symmetric(vertical: 4);
-  static const vertical8 = EdgeInsets.symmetric(vertical: 8.0);
-}
+const zero = EdgeInsets.zero;
+const vertical2 = EdgeInsets.symmetric(vertical: 2);
+const vertical4 = EdgeInsets.symmetric(vertical: 4);
+const vertical8 = EdgeInsets.symmetric(vertical: 8.0);
+
+const gap16 = Gap(16);
