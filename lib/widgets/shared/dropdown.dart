@@ -55,6 +55,9 @@ class CustomDropdown<T> extends StatelessWidget {
       if (item.runtimeType == int && item == value) {
         return value;
       }
+      if (item.runtimeType == bool && item == value) {
+        return value;
+      }
     }
 
     return null;
