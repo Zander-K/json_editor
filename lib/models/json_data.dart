@@ -13,12 +13,9 @@ class JsonData with _$JsonData {
     required String? buttonText,
     required String? buttonNavigation,
     required String? closeButtonNavigation,
-    required String? titleColor,
-    // required String? buttonColor,
-    // required String? modalBackgroundColor,
+    required String? headerStyle,
     required int? bodyPadding,
     required int? buttonPadding,
-    required bool? hasError,
     required String? redirectURL,
   }) = _JsonData;
 
@@ -28,15 +25,25 @@ class JsonData with _$JsonData {
         buttonText: '',
         buttonNavigation: '',
         closeButtonNavigation: '',
-        titleColor: '',
-        // buttonColor: '',
-        // modalBackgroundColor: '',
+        headerStyle: '',
         bodyPadding: null,
         buttonPadding: null,
-        hasError: null,
         redirectURL: '',
       );
 
   factory JsonData.fromJson(Map<String, dynamic> json) =>
       _$JsonDataFromJson(json);
+
+  // bool get isEmpty =>
+  //     (title == null || title!.isEmpty) &&
+  //     (description == null || description!.isEmpty) &&
+  //     (buttonText == null || buttonText!.isEmpty) &&
+  //     (buttonNavigation == null || buttonNavigation!.isEmpty) &&
+  //     (closeButtonNavigation == null || closeButtonNavigation!.isEmpty) &&
+  //     (headerStyle == null || headerStyle!.isEmpty) &&
+  //     (bodyPadding == null || bodyPadding == 8) &&
+  //     (buttonPadding == null || buttonPadding == 8) &&
+  //     (redirectURL == null || redirectURL!.isEmpty);
+
+  // bool get isNotEmpty => !isEmpty;
 }

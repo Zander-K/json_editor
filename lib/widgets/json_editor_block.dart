@@ -24,18 +24,12 @@ class JsonEditorBlock extends StatelessWidget {
         text: JsonKeys.buttonNavigation.defaultValue.toString());
     final closeButtonNavigationController = TextEditingController(
         text: JsonKeys.closeButtonNavigation.defaultValue.toString());
-    final titleColorController = TextEditingController(
-        text: JsonKeys.titleColor.defaultValue.toString());
-    // final buttonColorController = TextEditingController(
-    //     text: JsonKeys.buttonColor.defaultValue.toString());
-    // final modalBackgroundColorController = TextEditingController(
-    //     text: JsonKeys.modalBackgroundColor.defaultValue.toString());
+    final headerStyleController = TextEditingController(
+        text: JsonKeys.headerStyle.defaultValue.toString());
     final bodyPaddingController = TextEditingController(
         text: JsonKeys.bodyPadding.defaultValue.toString());
     final buttonPaddingController = TextEditingController(
         text: JsonKeys.buttonPadding.defaultValue.toString());
-    final hasErrorController =
-        TextEditingController(text: JsonKeys.hasError.defaultValue.toString());
     final redirectURLController = TextEditingController(
         text: JsonKeys.redirectURL.defaultValue.toString());
 
@@ -52,13 +46,9 @@ class JsonEditorBlock extends StatelessWidget {
         buttonNavigationController.text = state.json.buttonNavigation ?? 'null';
         closeButtonNavigationController.text =
             state.json.closeButtonNavigation ?? '';
-        titleColorController.text = state.json.titleColor ?? '';
-        // buttonColorController.text = state.json.buttonColor ?? '';
-        // modalBackgroundColorController.text =
-        //     state.json.modalBackgroundColor ?? '';
+        headerStyleController.text = state.json.headerStyle ?? '';
         bodyPaddingController.text = state.json.bodyPadding.toString();
         buttonPaddingController.text = state.json.buttonPadding.toString();
-        hasErrorController.text = state.json.hasError.toString();
         redirectURLController.text = state.json.redirectURL ?? '';
       },
       child: BlocBuilder<JsonBloc, JsonState>(
@@ -88,6 +78,12 @@ class JsonEditorBlock extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // General Section
+                            const Text(
+                              'General',
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            const Divider(),
                             CustomTextField(
                               label: capitalize(JsonKeys.title.name),
                               hintText: JsonKeys.title.hintText,
@@ -120,6 +116,13 @@ class JsonEditorBlock extends StatelessWidget {
                                     );
                               },
                             ),
+                            const SizedBox(height: 16),
+                            // Navigation Section
+                            const Text(
+                              'Navigation',
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            const Divider(),
                             CustomDropdown<String>(
                               label: capitalize(JsonKeys.buttonNavigation.name),
                               hintText: JsonKeys.buttonNavigation.hintText,
@@ -149,49 +152,67 @@ class JsonEditorBlock extends StatelessWidget {
                                     );
                               },
                             ),
-                            CustomDropdown<String>(
-                              label: capitalize(JsonKeys.titleColor.name),
-                              hintText: JsonKeys.titleColor.hintText,
-                              value: titleColorController.text,
-                              items: ColorOptions.values
-                                  .map((e) => e.value)
-                                  .toList(),
+                            CustomTextField(
+                              label: capitalize(JsonKeys.redirectURL.name),
+                              hintText: JsonKeys.redirectURL.hintText,
+                              controller: redirectURLController,
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
-                                      JsonEvent.onChangedTitleColor(
-                                          value: value.toString()),
+                                      JsonEvent.onChangedRedirectURL(
+                                          value: value),
                                     );
                               },
                             ),
-                            // CustomDropdown<String>(
-                            //   label: capitalize(JsonKeys.buttonColor.name),
-                            //   hintText: JsonKeys.buttonColor.hintText,
-                            //   value: buttonColorController.text,
-                            //   items: ColorOptions.values
-                            //       .map((e) => e.value)
-                            //       .toList(),
-                            //   onChanged: (value) {
-                            //     context.read<JsonBloc>().add(
-                            //           JsonEvent.onChangedButtonColor(
-                            //               value: value ?? ''),
-                            //         );
-                            //   },
-                            // ),
-                            // CustomDropdown<String>(
-                            //   label: capitalize(
-                            //       JsonKeys.modalBackgroundColor.name),
-                            //   hintText: JsonKeys.modalBackgroundColor.hintText,
-                            //   value: modalBackgroundColorController.text,
-                            //   items: ColorOptions.values
-                            //       .map((e) => e.value)
-                            //       .toList(),
-                            //   onChanged: (value) {
-                            //     context.read<JsonBloc>().add(
-                            //           JsonEvent.onChangedModalBackgroundColor(
-                            //               value: value ?? ''),
-                            //         );
-                            //   },
-                            // ),
+                            const SizedBox(height: 16),
+                            // Styling Section
+                            const Text(
+                              'Styling',
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            const Divider(),
+                            CustomDropdown<ColorOptions>(
+                              label: capitalize(JsonKeys.headerStyle.name),
+                              hintText: JsonKeys.headerStyle.hintText,
+                              value: ColorOptions.values.firstWhere(
+                                (e) => e.name == headerStyleController.text,
+                                orElse: () => ColorOptions.primary,
+                              ),
+                              items: ColorOptions.values,
+                              itemBuilder: (ColorOptions option) {
+                                return Row(
+                                  children: [
+                                    Container(
+                                      width: 18,
+                                      height: 18,
+                                      margin: const EdgeInsets.only(right: 2),
+                                      decoration: BoxDecoration(
+                                        color: option.grosvenorColor.color,
+                                        borderRadius: BorderRadius.circular(4),
+                                        border: Border.all(color: Colors.grey.shade400),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 18,
+                                      height: 18,
+                                      margin: const EdgeInsets.only(right: 8, left: 2),
+                                      decoration: BoxDecoration(
+                                        color: option.meccaColor.color,
+                                        borderRadius: BorderRadius.circular(4),
+                                        border: Border.all(color: Colors.grey.shade400),
+                                      ),
+                                    ),
+                                    Text(option.label),
+                                  ],
+                                );
+                              },
+                              onChanged: (option) {
+                                context.read<JsonBloc>().add(
+                                  JsonEvent.onChangedHeaderStyle(
+                                    value: option?.name ?? '',
+                                  ),
+                                );
+                              },
+                            ),
                             CustomDropdown<int>(
                               label: capitalize(JsonKeys.bodyPadding.name),
                               hintText: JsonKeys.bodyPadding.hintText,
@@ -216,28 +237,6 @@ class JsonEditorBlock extends StatelessWidget {
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
                                       JsonEvent.onChangedButtonPadding(
-                                          value: value),
-                                    );
-                              },
-                            ),
-                            CustomDropdown<bool>(
-                              label: capitalize(JsonKeys.hasError.name),
-                              hintText: JsonKeys.hasError.hintText,
-                              value: hasErrorController.text.asBool,
-                              items: const [true, false],
-                              onChanged: (value) {
-                                context.read<JsonBloc>().add(
-                                      JsonEvent.onChangedHasError(value: value),
-                                    );
-                              },
-                            ),
-                            UrlTestingTextField(
-                              label: capitalize(JsonKeys.redirectURL.name),
-                              hintText: JsonKeys.redirectURL.hintText,
-                              controller: redirectURLController,
-                              onChanged: (value) {
-                                context.read<JsonBloc>().add(
-                                      JsonEvent.onChangedRedirectURL(
                                           value: value),
                                     );
                               },

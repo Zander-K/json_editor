@@ -11,6 +11,7 @@ class CustomDropdown<T> extends StatelessWidget {
     this.onChanged,
     this.padding,
     this.hintText,
+    this.itemBuilder,
   });
 
   final String label;
@@ -19,6 +20,7 @@ class CustomDropdown<T> extends StatelessWidget {
   final void Function(T?)? onChanged;
   final EdgeInsetsGeometry? padding;
   final String? hintText;
+  final Widget Function(T item)? itemBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class CustomDropdown<T> extends StatelessWidget {
         items: items.map((T item) {
           return DropdownMenuItem<T>(
             value: item,
-            child: Text(item.toString()),
+            child: itemBuilder != null ? itemBuilder!(item) : Text(item.toString()),
           );
         }).toList(),
       ),

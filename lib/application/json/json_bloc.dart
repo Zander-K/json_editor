@@ -124,48 +124,20 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
             ),
           );
         },
-        onChangedTitleColor: (e) {
+        onChangedHeaderStyle: (e) {
           emit(
             state.copyWith(
               json: state.json.copyWith(
-                titleColor: e.value,
+                headerStyle: e.value,
               ),
               representation: updateJsonRepresentation(
                 state.representation,
-                JsonKeys.titleColor.key,
+                JsonKeys.headerStyle.key,
                 e.value,
               ),
             ),
           );
         },
-        // onChangedButtonColor: (e) {
-        //   emit(
-        //     state.copyWith(
-        //       json: state.json.copyWith(
-        //         buttonColor: e.value,
-        //       ),
-        //       representation: updateJsonRepresentation(
-        //         state.representation,
-        //         JsonKeys.buttonColor.key,
-        //         e.value,
-        //       ),
-        //     ),
-        //   );
-        // },
-        // onChangedModalBackgroundColor: (e) {
-        //   emit(
-        //     state.copyWith(
-        //       json: state.json.copyWith(
-        //         modalBackgroundColor: e.value,
-        //       ),
-        //       representation: updateJsonRepresentation(
-        //         state.representation,
-        //         JsonKeys.modalBackgroundColor.key,
-        //         e.value,
-        //       ),
-        //     ),
-        //   );
-        // },
         onChangedBodyPadding: (e) {
           emit(
             state.copyWith(
@@ -189,20 +161,6 @@ class JsonBloc extends Bloc<JsonEvent, JsonState> {
               representation: updateJsonRepresentation(
                 state.representation,
                 JsonKeys.buttonPadding.key,
-                e.value,
-              ),
-            ),
-          );
-        },
-        onChangedHasError: (e) {
-          emit(
-            state.copyWith(
-              json: state.json.copyWith(
-                hasError: e.value,
-              ),
-              representation: updateJsonRepresentation(
-                state.representation,
-                JsonKeys.hasError.key,
                 e.value,
               ),
             ),

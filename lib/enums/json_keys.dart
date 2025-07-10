@@ -15,17 +15,12 @@ enum JsonKeys {
     null,
     'Select navigation for close button (defaults to button navigation)',
   ),
-  titleColor('titleColor', 'Title Color', null, 'Select a color for the title'),
-  // buttonColor(
-  //     'buttonColor', 'Button Color', null, 'Select a color for the button'),
-  // modalBackgroundColor('modalBackgroundColor', 'Modal Background Color', null,
-  //     'Select a color for the modal background'),
+  headerStyle(
+      'headerStyle', 'Header Style', null, 'Select a style for the header'),
   bodyPadding('bodyPadding', 'Body Padding', null,
       'Select a size for the body padding'),
   buttonPadding('buttonPadding', 'Button Padding', null,
       'Select a size for the button padding'),
-  hasError('hasError', 'Has Error', null,
-      'Select an option based on if the modal indicates an error/problem'),
   redirectURL(
       'redirectURL', 'Redirect URL', '', 'Enter a URL starting with https://');
 

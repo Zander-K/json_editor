@@ -17,11 +17,28 @@ class MainPage extends StatelessWidget {
           title: const Text('Startup Prompt JSON Editor'),
           elevation: 8,
         ),
-        body: const Row(
+        body: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            JsonEditorBlock(),
-            gap16,
-            LiveJsonBlock(),
+            SizedBox(height: 24),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 32.0),
+              child: Text(
+                'Easily build and preview your startup prompt JSON. Fill in the fields on the left, and see the live JSON update on the right. When you\'re ready, generate or import your JSON with a single click.',
+                style: TextStyle(fontSize: 16, color: Colors.black87),
+              ),
+            ),
+            SizedBox(height: 24),
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  JsonEditorBlock(),
+                  gap16,
+                  LiveJsonBlock(),
+                ],
+              ),
+            ),
           ],
         ),
       ),

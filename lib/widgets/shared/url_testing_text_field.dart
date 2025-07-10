@@ -19,10 +19,10 @@ class UrlTestingTextField extends StatefulWidget {
   final String? hintText;
 
   @override
-  _UrlTestingTextFieldState createState() => _UrlTestingTextFieldState();
+  UrlTestingTextFieldState createState() => UrlTestingTextFieldState();
 }
 
-class _UrlTestingTextFieldState extends State<UrlTestingTextField> {
+class UrlTestingTextFieldState extends State<UrlTestingTextField> {
   String? _redirectURL;
   bool _isURLValid = false;
 
