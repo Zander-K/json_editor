@@ -1,6 +1,6 @@
 {
-    "name": "json_editor_web",
-    "short_name": "json_editor_web",
+    "name": "json_editor",
+    "short_name": "json_editor",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
