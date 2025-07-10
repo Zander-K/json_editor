@@ -47,8 +47,8 @@ class LiveJsonBlock extends HookWidget {
                         _generateJson(context, state);
                       },
                       style: const ButtonStyle(
-                          elevation: MaterialStatePropertyAll(8),
-                          fixedSize: MaterialStatePropertyAll(Size(148, 48))),
+                          elevation: WidgetStatePropertyAll(8),
+                          fixedSize: WidgetStatePropertyAll(Size(148, 48))),
                       child: const Text('Generate JSON'),
                     ),
                   ),
@@ -71,8 +71,8 @@ class LiveJsonBlock extends HookWidget {
                         );
                       },
                       style: const ButtonStyle(
-                          elevation: MaterialStatePropertyAll(8),
-                          fixedSize: MaterialStatePropertyAll(Size(148, 48))),
+                          elevation: WidgetStatePropertyAll(8),
+                          fixedSize: WidgetStatePropertyAll(Size(148, 48))),
                       child: const Text('Import JSON'),
                     ),
                   ),

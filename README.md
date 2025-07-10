@@ -6,3 +6,7 @@ This is a simple web page to enter json values and the copy it to the clipboard 
 
 test
 test
+
+## Example
+
+<img src=docs/example.png>

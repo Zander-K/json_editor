@@ -15,12 +15,9 @@ class JsonState with _$JsonState {
           buttonText: '',
           buttonNavigation: '',
           closeButtonNavigation: '',
-          titleColor: '',
-          // buttonColor: '',
-          // modalBackgroundColor: '',
+          headerStyle: '',
           bodyPadding: 8,
           buttonPadding: 8,
-          hasError: false,
           redirectURL: '',
         ),
         representation: const JsonEncoder.withIndent('    ')

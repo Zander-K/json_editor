@@ -13,12 +13,9 @@ class JsonData with _$JsonData {
     required String? buttonText,
     required String? buttonNavigation,
     required String? closeButtonNavigation,
-    required String? titleColor,
-    // required String? buttonColor,
-    // required String? modalBackgroundColor,
+    required String? headerStyle,
     required int? bodyPadding,
     required int? buttonPadding,
-    required bool? hasError,
     required String? redirectURL,
   }) = _JsonData;
 
@@ -28,12 +25,9 @@ class JsonData with _$JsonData {
         buttonText: '',
         buttonNavigation: '',
         closeButtonNavigation: '',
-        titleColor: '',
-        // buttonColor: '',
-        // modalBackgroundColor: '',
+        headerStyle: '',
         bodyPadding: null,
         buttonPadding: null,
-        hasError: null,
         redirectURL: '',
       );
 
