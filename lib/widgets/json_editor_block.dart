@@ -78,6 +78,12 @@ class JsonEditorBlock extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // General Section
+                            const Text(
+                              'General',
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            const Divider(),
                             CustomTextField(
                               label: capitalize(JsonKeys.title.name),
                               hintText: JsonKeys.title.hintText,
@@ -110,6 +116,13 @@ class JsonEditorBlock extends StatelessWidget {
                                     );
                               },
                             ),
+                            const SizedBox(height: 16),
+                            // Navigation Section
+                            const Text(
+                              'Navigation',
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            const Divider(),
                             CustomDropdown<String>(
                               label: capitalize(JsonKeys.buttonNavigation.name),
                               hintText: JsonKeys.buttonNavigation.hintText,
@@ -139,18 +152,65 @@ class JsonEditorBlock extends StatelessWidget {
                                     );
                               },
                             ),
-                            CustomDropdown<String>(
-                              label: capitalize(JsonKeys.headerStyle.name),
-                              hintText: JsonKeys.headerStyle.hintText,
-                              value: headerStyleController.text,
-                              items: ColorOptions.values
-                                  .map((e) => e.value)
-                                  .toList(),
+                            CustomTextField(
+                              label: capitalize(JsonKeys.redirectURL.name),
+                              hintText: JsonKeys.redirectURL.hintText,
+                              controller: redirectURLController,
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
-                                      JsonEvent.onChangedHeaderStyle(
-                                          value: value.toString()),
+                                      JsonEvent.onChangedRedirectURL(
+                                          value: value),
                                     );
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            // Styling Section
+                            const Text(
+                              'Styling',
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            const Divider(),
+                            CustomDropdown<ColorOptions>(
+                              label: capitalize(JsonKeys.headerStyle.name),
+                              hintText: JsonKeys.headerStyle.hintText,
+                              value: ColorOptions.values.firstWhere(
+                                (e) => e.name == headerStyleController.text,
+                                orElse: () => ColorOptions.primary,
+                              ),
+                              items: ColorOptions.values,
+                              itemBuilder: (ColorOptions option) {
+                                return Row(
+                                  children: [
+                                    Container(
+                                      width: 18,
+                                      height: 18,
+                                      margin: const EdgeInsets.only(right: 2),
+                                      decoration: BoxDecoration(
+                                        color: option.grosvenorColor.color,
+                                        borderRadius: BorderRadius.circular(4),
+                                        border: Border.all(color: Colors.grey.shade400),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 18,
+                                      height: 18,
+                                      margin: const EdgeInsets.only(right: 8, left: 2),
+                                      decoration: BoxDecoration(
+                                        color: option.meccaColor.color,
+                                        borderRadius: BorderRadius.circular(4),
+                                        border: Border.all(color: Colors.grey.shade400),
+                                      ),
+                                    ),
+                                    Text(option.label),
+                                  ],
+                                );
+                              },
+                              onChanged: (option) {
+                                context.read<JsonBloc>().add(
+                                  JsonEvent.onChangedHeaderStyle(
+                                    value: option?.name ?? '',
+                                  ),
+                                );
                               },
                             ),
                             CustomDropdown<int>(
@@ -177,17 +237,6 @@ class JsonEditorBlock extends StatelessWidget {
                               onChanged: (value) {
                                 context.read<JsonBloc>().add(
                                       JsonEvent.onChangedButtonPadding(
-                                          value: value),
-                                    );
-                              },
-                            ),
-                            UrlTestingTextField(
-                              label: capitalize(JsonKeys.redirectURL.name),
-                              hintText: JsonKeys.redirectURL.hintText,
-                              controller: redirectURLController,
-                              onChanged: (value) {
-                                context.read<JsonBloc>().add(
-                                      JsonEvent.onChangedRedirectURL(
                                           value: value),
                                     );
                               },

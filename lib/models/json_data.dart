@@ -33,4 +33,17 @@ class JsonData with _$JsonData {
 
   factory JsonData.fromJson(Map<String, dynamic> json) =>
       _$JsonDataFromJson(json);
+
+  // bool get isEmpty =>
+  //     (title == null || title!.isEmpty) &&
+  //     (description == null || description!.isEmpty) &&
+  //     (buttonText == null || buttonText!.isEmpty) &&
+  //     (buttonNavigation == null || buttonNavigation!.isEmpty) &&
+  //     (closeButtonNavigation == null || closeButtonNavigation!.isEmpty) &&
+  //     (headerStyle == null || headerStyle!.isEmpty) &&
+  //     (bodyPadding == null || bodyPadding == 8) &&
+  //     (buttonPadding == null || buttonPadding == 8) &&
+  //     (redirectURL == null || redirectURL!.isEmpty);
+
+  // bool get isNotEmpty => !isEmpty;
 }
